@@ -10,7 +10,7 @@ def setup_fresh_dynasty():
   conference = input("Enter your conference: ")
 
   # Create intial csv file
-  csv_file = "dynasty.csv"
+  csv_file = "data/dynasty.csv"
   column_headers =  ["Season Year", "Coach Name", "Coach Position", "Team Name", "Team Overall", "Conference"]
   with open(csv_file, "w", newline="") as file:
     writer = csv.writer(file)
@@ -26,7 +26,7 @@ def progress_to_next_season():
   conference = input("Enter your conference(press enter to keep the same as last year ): ")
 
   # Read previous season data
-  csv_file = "dynasty.csv"
+  csv_file = "data/dynasty.csv"
   with open(csv_file, "r", newline="") as file:
     reader = csv.reader(file)
     data = list(reader)
