@@ -1,5 +1,5 @@
 from src.dynasty_setup import setup_fresh_dynasty, progress_to_next_season
-from src.utils import clear_data, view_past_seasons
+from src.utils import clear_data, view_past_seasons, view_dynasty_table
 
 
 # Main program loop
@@ -8,9 +8,10 @@ def main():
         # Print menu options
         print("1. Start a new dynasty")
         print("2. Progress to the next season")
-        print("3. View Past Season")
-        print("4. Exit")
-        print("5. Clear Data")
+        print("3. View Past Seasons")
+        print("4. View Dynasty Table")
+        print("5. Exit")
+        print("6. Clear Data")
     
         # Get user choice
         choice = input("Enter your choice: ")
@@ -25,12 +26,15 @@ def main():
             progress_to_next_season()  # Progress to the next seasonf
         elif choice == "3":
             view_past_seasons()
-        # Exit the program
+
         elif choice == "4":
+            view_dynasty_table()
+        # Exit the program
+        elif choice == "5":
             print("Exiting the program.")
             break
         # Clear data
-        elif choice == "5":
+        elif choice == "6":
             clear_data()  # Clear data
             print("Data cleared.")
         else:

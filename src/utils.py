@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 def clear_data():
   files_to_clear = ["data/dynasty.csv", "data/player.csv"]
@@ -13,42 +14,24 @@ def clear_data():
   
 
 def view_past_seasons():
-  csv_file = "data/dynasty.csv"
-  with open(csv_file, "r", newline="") as file:
-    reader = csv.reader(file)
-    data = list(reader)
+  df = pd.read_csv("data/dynasty.csv")
     
   # Printing avaialble seasons
   print("Past Seasons:")
-  for i, season in enumerate(data[1:]):
-    print(f"{i}. Season {season[0]}")
+  for i, season in enumerate(df["Season Year"].unique(), start=1):
+    print(f"{i}. Season {season}")
 
   # Asking user to select a season
   season_choice = input("Enter the number of the season you want to view: ")
-  selected_season = data[int(season_choice)]
+  selected_season = df["Season Year"].unique()[int(season_choice) - 1]
 
-  # Ask user what value they would like to view
-  print("What would youo like to view?")
-  print("1. All season details")
-  print("2. Coach Name")
-  print("3. Coach Position")
-  print("4. Team Name")
-  print("5. Team OVR")
-  print("6. Conference")
+  # Filter the DataFrame to show only the selected season's data
+  season_data = df[df["Season Year"] == selected_season]
 
-  view_choice = int(input("Enter number of your choice: "))
+  # Print the selected season's data
+  print(season_data)
 
-  if view_choice == 1:
-    # Print all details
-    print("Season Details:")
-    print(f"Year: {selected_season[0]}")
-    print(f"Coach Name: {selected_season[1]}")
-    print(f"Coach Position: {selected_season[2]}")
-    print(f"Team Name: {selected_season[3]}")
-    print(f"Team OVR: {selected_season[4]}")
-    print(f"Conference: {selected_season[5]}")
-
-  else:
-    # Print selected data
-    data_labels = ["Year", "Coach Name", "Coach Position", "Team Name", "Team OVR", "Conference"]
-    print(f"{data_labels[view_choice - 1]}:{selected_season[view_choice - 1]}")
+# View full dynasty table
+def view_dynasty_table():
+  df = pd.read_csv("data/dynasty.csv")
+  print(df)
