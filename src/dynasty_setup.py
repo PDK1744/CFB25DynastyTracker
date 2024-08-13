@@ -31,14 +31,18 @@ def progress_to_next_season():
     reader = csv.reader(file)
     data = list(reader)
 
-  # Update data with the new season's details
-  season_year = int(data[-1][0]) + 1
-  if coach_name: data[-1][1] = coach_name
-  if coach_position: data[-1][2] = coach_position
-  if team_name: data[-1][3] = team_name
-  if team_ovr: data[-1][4] = team_ovr
-  if conference: data[-1][5] = conference
+  # Get last season's details
+  last_season = data[-1]
 
-  with open(csv_file, "w", newline="") as file:
+  # Update data with the new season's details
+  season_year = int(last_season[0]) + 1
+  coach_name = coach_name or last_season[1]
+  coach_position = coach_position or last_season[2]
+  team_name = team_name or last_season[3]
+  team_ovr = team_ovr or last_season[4]
+  conference = conference or last_season[5]
+
+  new_season = [str(season_year), coach_name, coach_position, team_name, team_ovr, conference]
+  with open(csv_file, "a") as file:
     writer = csv.writer(file)
-    writer.writerows(data)
+    writer.writerow(new_season)
