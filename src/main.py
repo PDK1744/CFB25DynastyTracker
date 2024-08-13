@@ -8,6 +8,7 @@ def main():
         # Print menu options
         print("1. Start a new dynasty")
         print("2. Progress to the next season")
+        print("3. Add")
         print("3. View Past Seasons")
         print("4. View Dynasty Table")
         print("5. Exit")
