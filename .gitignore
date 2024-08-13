@@ -1,0 +1,32 @@
+# Byte-compiled Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python package directories
+/dist
+/build
+/eggs
+
+# Python egg files
+*.egg
+
+# PyInstaller files
+/dist
+/build
+
+# Sphinx documentation
+/docs/_build
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode settings
+.vscode/
+
+# PyCharm settings
+/.idea/
+
+# Other
+.DS_Store
+.env
