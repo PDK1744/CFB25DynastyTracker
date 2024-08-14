@@ -1,1 +1,23 @@
-patKRD3tZfLUqI86J.e345abc9f4c38a1bb9bf0feb684253f6d7c1a73c363ee11ed28292ab93fb655b
+# Create intial csv file
+csv_file = "data/dynasty.csv"
+column_headers =  ["Season Year", "Coach Name", "Coach Position", "Team Name", "Team Overall", "Conference"]
+with open(csv_file, "w", newline="") as file:
+  writer = csv.writer(file)
+  writer.writerow(column_headers)
+  writer.writerow([season_year, coach_name, coach_position, team_name, team_ovr, conference])
+
+  # Read previous season data
+  csv_file = "data/dynasty.csv"
+  with open(csv_file, "r", newline="") as file:
+    reader = csv.reader(file)
+    data = list(reader)
+
+  # Get last season's details
+  last_season = data[-1]
+
+
+
+  new_season = [str(season_year), coach_name, coach_position, team_name, team_ovr, conference]
+  with open(csv_file, "a") as file:
+    writer = csv.writer(file)
+    writer.writerow(new_season)

@@ -1,4 +1,5 @@
-import csv
+from data.at_database import get_records, create_record, update_record
+from data.at_database import dynasty_tb
 
 def setup_fresh_dynasty():
   # Ask for intial season details(2024)
@@ -6,16 +7,19 @@ def setup_fresh_dynasty():
   coach_name = input("Enter your coach name: ")
   coach_position = input("Enter your coach position: ")
   team_name = input("Enter your team name: ")
-  team_ovr = input("Enter your team overall: ")
+  team_ovr = int(input("Enter your team overall: "))
   conference = input("Enter your conference: ")
 
-  # Create intial csv file
-  csv_file = "data/dynasty.csv"
-  column_headers =  ["Season Year", "Coach Name", "Coach Position", "Team Name", "Team Overall", "Conference"]
-  with open(csv_file, "w", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow(column_headers)
-    writer.writerow([season_year, coach_name, coach_position, team_name, team_ovr, conference])
+  # Create dynasty table
+  data: dict = {
+    'Season Year': season_year,
+    'Coach Name': coach_name,
+    'Coach Position': coach_position,
+    'Team Name': team_name,
+    'Team Overall': team_ovr,
+    'Conference': conference
+  }
+  create_record(dynasty_tb, data)
 
 def progress_to_next_season():
   # Ask for updated team and coach details
@@ -26,23 +30,22 @@ def progress_to_next_season():
   conference = input("Enter your conference(press enter to keep the same as last year ): ")
 
   # Read previous season data
-  csv_file = "data/dynasty.csv"
-  with open(csv_file, "r", newline="") as file:
-    reader = csv.reader(file)
-    data = list(reader)
-
-  # Get last season's details
-  last_season = data[-1]
+  last_season = get_records(dynasty_tb)[-1]
 
   # Update data with the new season's details
-  season_year = int(last_season[0]) + 1
-  coach_name = coach_name or last_season[1]
-  coach_position = coach_position or last_season[2]
-  team_name = team_name or last_season[3]
-  team_ovr = team_ovr or last_season[4]
-  conference = conference or last_season[5]
+  season_year = int(last_season.get('Season Year', 0)) + 1
+  coach_name = coach_name or last_season.get('Coach Name', '')
+  coach_position = coach_position or last_season.get('Coach Position', '')
+  team_name = team_name or last_season.get('Team Name', '')
+  team_ovr = team_ovr or last_season.get('Team Overall', '')
+  conference = conference or last_season.get('Conference', '')
 
-  new_season = [str(season_year), coach_name, coach_position, team_name, team_ovr, conference]
-  with open(csv_file, "a") as file:
-    writer = csv.writer(file)
-    writer.writerow(new_season)
+  data: dict = {
+    'Season Year': season_year,
+    'Coach Name': coach_name,
+    'Coach Position': coach_position,
+    'Team Name': team_name,
+    'Team Overall': team_ovr,
+    'Conference': conference
+  }
+  update_record(dynasty_tb, last_season.get('id',''), data)
