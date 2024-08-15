@@ -1,16 +1,23 @@
 import csv
 import pandas as pd
+import airtable as at
+from pyairtable import Table
+import sys
+sys.path.insert(0, './data/at_database')
+from data.at_database import base_id, api
 
 def clear_data():
-  files_to_clear = ["data/dynasty.csv", "data/player.csv"]
+
   print("Are you sure you want to clear? This will wipe everything")
   confirm = input("Enter yes to clear; enter no to return to menu: ")
   if confirm.lower() == "yes":
-    for file in files_to_clear:
-      with open(file, "w"):
-        pass
-  else:
-    print("Data not cleared")
+    tables_to_clear = ["dynasty", "players"]
+    for table_name in tables_to_clear:
+      table = Table(api, base_id, table_name)
+      records = table.all()
+      record_ids = [record['id'] for record in records]
+      table.batch_delete(record_ids)
+    
   
 
 def view_past_seasons():

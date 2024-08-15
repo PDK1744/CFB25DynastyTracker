@@ -1,23 +1,16 @@
-# Create intial csv file
-csv_file = "data/dynasty.csv"
-column_headers =  ["Season Year", "Coach Name", "Coach Position", "Team Name", "Team Overall", "Conference"]
-with open(csv_file, "w", newline="") as file:
-  writer = csv.writer(file)
-  writer.writerow(column_headers)
-  writer.writerow([season_year, coach_name, coach_position, team_name, team_ovr, conference])
+def clear_data():
 
-  # Read previous season data
-  csv_file = "data/dynasty.csv"
-  with open(csv_file, "r", newline="") as file:
-    reader = csv.reader(file)
-    data = list(reader)
-
-  # Get last season's details
-  last_season = data[-1]
+print("Are you sure you want to clear? This will wipe everything")
+confirm = input("Enter yes to clear; enter no to return to menu: ")
+if confirm.lower() == "yes":
+  tables_to_clear = ["dynasty", "players"]
+  for table_name in tables_to_clear:
+    table = Table(base_id, table_name, api)
+    records = table.all()
+    record_ids = [record['id'] for record in records]
+    table.batch_delete(record_ids)
+    ##for record in records:
+      ##table.delete(record['id'])
 
 
-
-  new_season = [str(season_year), coach_name, coach_position, team_name, team_ovr, conference]
-  with open(csv_file, "a") as file:
-    writer = csv.writer(file)
-    writer.writerow(new_season)
+      https://airtable.com/appma4DOFT5y1SKZj/tbliY8sJ1soWJGd1k/viwtxlqKZhQ4BXzZ0?blocks=hide

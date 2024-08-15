@@ -1,6 +1,7 @@
 import os
 from airtable import Airtable
 
+
 api = os.environ['AIRTABLE_API_KEY']
 base_id = 'appma4DOFT5y1SKZj'
 
@@ -16,10 +17,10 @@ special_roster_tb = at.table('tblJncPBDsNN6cfVH')
 
 def get_records(table):
   try:
-      return table.all()
+      return list(table.iterate())
   except Exception as e:
-      print(f"Error getting records: {e}")
-      return []
+      print(f"Error getting records: {table}: {e}")
+      return None
 
 def create_record(table, data):
   try:
