@@ -1,8 +1,11 @@
-import csv
+
+from numpy import record
 import pandas as pd
 import airtable as at
 from pyairtable import Table
 import sys
+
+from pyairtable.api import table
 sys.path.insert(0, './data/at_database')
 from data.at_database import base_id, api
 
@@ -21,7 +24,9 @@ def clear_data():
   
 
 def view_past_seasons():
-  df = pd.read_csv("data/dynasty.csv")
+  table = Table(api, base_id, "dynasty")
+  records = table.all()
+  df = pd.DataFrame([record['fields'] for record in records])
     
   # Printing avaialble seasons
   print("Past Seasons:")
@@ -40,5 +45,7 @@ def view_past_seasons():
 
 # View full dynasty table
 def view_dynasty_table():
-  df = pd.read_csv("data/dynasty.csv")
+  table = Table(api, base_id, "dynasty")
+  records = table.all()
+  df = pd.DataFrame([record['fields'] for record in records])
   print(df)
