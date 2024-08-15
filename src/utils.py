@@ -1,11 +1,10 @@
 
 from numpy import record
 import pandas as pd
-import airtable as at
 from pyairtable import Table
 import sys
 
-from pyairtable.api import table
+
 sys.path.insert(0, './data/at_database')
 from data.at_database import base_id, api
 
